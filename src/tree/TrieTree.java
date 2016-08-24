@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * TrieTree算法
  * Created by tony on 16/8/24.
  */
 public class TrieTree {
@@ -30,8 +31,7 @@ public class TrieTree {
      *
      * @return
      */
-
-    public List<String> listAllWords() {
+    public List<String> getAllWords() {
 
         List<String> words = new ArrayList<String>();
         TrieNode[] edges = root.child;
@@ -56,6 +56,7 @@ public class TrieTree {
         if (node.words != 0) {
             words.add(wordSegment);
         }
+
         TrieNode[] edges = node.child;
         for (int i = 0; i < edges.length; i++) {
             if (edges[i] != null) {
@@ -159,6 +160,39 @@ public class TrieTree {
     }
 
     /**
+     * 向tire树删除一个词
+     *
+     * @param word
+     *
+     */
+
+    public void removeWord(String word) {
+        removeWord(root, word);
+    }
+
+    /**
+     *
+     * @param node
+     * @param word
+     */
+    private void removeWord(TrieNode node, String word) {
+        if (word.length()==0) {
+
+            if (node!=null && node.words!=0) {
+                node.words--;
+            }
+
+            return;
+        } else {
+            node.prefixes--;
+            char c = word.charAt(0);
+            c = Character.toLowerCase(c);
+            int index = c - 'a';
+            removeWord(node.child[index], word.substring(1));
+        }
+    }
+
+    /**
      * 返回指定字段前缀匹配最长的单词。
      *
      * @param word
@@ -192,8 +226,7 @@ public class TrieTree {
         return s;
     }
 
-    public static void main(String args[]) // Just used for test
-    {
+    public static void main(String args[]) {
         TrieTree trie = new TrieTree();
         trie.addWord("abcedfddddddd");
         trie.addWord("a");
@@ -203,11 +236,8 @@ public class TrieTree {
         trie.addWord("abcef");
         trie.addWord("abce");
 
-
-        System.out.println(trie.countPrefixes("abc"));
-//        String maxMatch = trie.getMaxMatchWord("abcedfdddd");
-//        System.out.println(maxMatch);
-
+        String maxMatch = trie.getMaxMatchWord("abcedfdddd");
+        System.out.println(maxMatch);
 
     }
 }
