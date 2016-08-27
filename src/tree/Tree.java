@@ -115,6 +115,49 @@ public class Tree<T> {
         }
     }
 
+    /**
+     * 非递归实现后序遍历
+     * @param root
+     */
+    public void iterativePostorder(Node<T> root) {
+        Node q = root;
+        Stack<Node> stack = new Stack<Node>();
+        while (root != null) {
+            // 左子树入栈
+            for (; root.lchild != null; root = root.lchild)
+                stack.push(root);
+            // 当前节点无右子或右子已经输出
+            while (root != null && (root.rchild == null || root.rchild == q)) {
+                System.out.println(root.element);
+                q = root;// 记录上一个已输出节点
+                if (stack.empty())
+                    return;
+                root = stack.pop();
+            }
+            // 处理右子
+            stack.push(root);
+            root = root.rchild;
+        }
+    }
+
+    /**
+     * 取得二叉树的深度.
+     *
+     * @param root
+     * @return the depth
+     */
+    public int getDepth(Node<T> root) {
+
+        if (root == null) {
+            return 0;
+        }
+
+        int leftDepth = getDepth(root.lchild);
+        int rightDepth = getDepth(root.rchild);
+
+        return leftDepth > rightDepth ? leftDepth + 1 : rightDepth + 1;
+    }
+
     /*main方法用于测试*/
     public static void main(String[] args) {
         Node<String> f = new Node<String>("F");
@@ -125,6 +168,7 @@ public class Tree<T> {
         Node<String> root = new Node<String>("A", lchild, rchild);
 
         Tree<String> tree = new Tree<String>(root);
-        tree.preorder(tree.root);
+//        tree.preorder(tree.root);
+        System.out.println(tree.getDepth(tree.root));
     }
 }
