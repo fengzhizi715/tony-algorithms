@@ -1,5 +1,6 @@
 package tree;
 
+import java.util.LinkedList;
 import java.util.Stack;
 
 /**
@@ -159,6 +160,45 @@ public class Tree<T> {
         return leftDepth > rightDepth ? leftDepth + 1 : rightDepth + 1;
     }
 
+    /**
+     * 从上层到下层遍历二叉树
+     * @param node
+     */
+    public void traverseByLevelFromTop(Node<T> node) {
+        if (node == null) {
+            return;
+        }
+
+        // 用队列实现二叉树的层次遍历
+        LinkedList<Node> queue = new LinkedList<Node>();
+        queue.addLast(node);
+        int inCount = 1;
+        int outCount = 0;
+        Node curNode = null;
+        while (!queue.isEmpty()) {
+
+            curNode = queue.pollFirst();
+            System.out.print(curNode.element + " ");
+            outCount++;
+
+            if (curNode.lchild != null) {
+                queue.addLast(curNode.lchild);
+            }
+
+            if (curNode.rchild != null) {
+                queue.addLast(curNode.rchild);
+            }
+
+            //用inCount记录某层有多少个元素，outCount记录当前输出了多少个元素；当inCount==outCount时，就说明某层元素已经完全输出，此时应该换行(outCount清零)
+            if (outCount == inCount) {
+                System.out.println();
+                // 当第K层元素全部出队（并已将各自左右孩子入队）后，队列里面刚好存放了第K+1层的所有元素，不多不少，所以有：inCount = queue.size();
+                inCount = queue.size();
+                outCount = 0;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         Node<String> f = new Node<String>("F");
         Node<String> d = new Node<String>("D",f,null);
@@ -169,6 +209,7 @@ public class Tree<T> {
 
         Tree<String> tree = new Tree<String>(root);
 //        tree.preorder(tree.root);
-        System.out.println(tree.getDepth(tree.root));
+//        System.out.println(tree.getDepth(tree.root));
+        tree.traverseByLevelFromTop(tree.root);
     }
 }
