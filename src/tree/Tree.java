@@ -3,6 +3,7 @@ package tree;
 import java.util.Stack;
 
 /**
+ * 二叉树
  * Created by tony on 16/8/25.
  */
 public class Tree<T> {
@@ -158,7 +159,6 @@ public class Tree<T> {
         return leftDepth > rightDepth ? leftDepth + 1 : rightDepth + 1;
     }
 
-    /*main方法用于测试*/
     public static void main(String[] args) {
         Node<String> f = new Node<String>("F");
         Node<String> d = new Node<String>("D",f,null);
