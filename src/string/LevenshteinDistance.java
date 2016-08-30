@@ -9,14 +9,8 @@ package string;
 public class LevenshteinDistance {
 
     private static int min(int one, int two, int three) {
-        int min = one;
-        if (two < min) {
-            min = two;
-        }
-        if (three < min) {
-            min = three;
-        }
-        return min;
+        int min = one < two ? one : two;
+        return min < three ? min : three;
     }
 
     /**
