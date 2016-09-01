@@ -77,6 +77,8 @@ public class TrieTree {
         for(int i=0; i<length; ++i)
             if(node!=null)
                 node = node.child[prefix.charAt(i)-'a'];
+            else
+                return false;
 
         return node != null;
     }
