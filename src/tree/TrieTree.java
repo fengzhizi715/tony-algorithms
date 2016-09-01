@@ -27,7 +27,7 @@ public class TrieTree {
     }
 
     /**
-     * 获取tire树中所有的词
+     * 获取trie树中所有的词
      *
      * @return
      */
@@ -67,6 +67,21 @@ public class TrieTree {
     }
 
     /**
+     * 判断trie树中是否有以prefix为前缀的单词
+     * @param prefix
+     * @return
+     */
+    public boolean startsWith(String prefix) {
+        TrieNode node = root;
+        int length = prefix.length();
+        for(int i=0; i<length; ++i)
+            if(node!=null)
+                node = node.child[prefix.charAt(i)-'a'];
+
+        return node != null;
+    }
+
+    /**
      * 计算指定前缀单词的个数
      *
      * @param prefix
@@ -84,15 +99,7 @@ public class TrieTree {
 
         char c = prefixSegment.charAt(0);
         int index = c - 'a';
-        if (node.child[index] == null) { // the word does NOT exist
-            return 0;
-        } else {
-
-            return countPrefixes(node.child[index],
-                    prefixSegment.substring(1));
-
-        }
-
+        return node.child[index] == null ? 0 : countPrefixes(node.child[index], prefixSegment.substring(1));
     }
 
     /**
@@ -165,7 +172,6 @@ public class TrieTree {
      * @param word
      *
      */
-
     public void removeWord(String word) {
         removeWord(root, word);
     }
@@ -236,8 +242,9 @@ public class TrieTree {
         trie.addWord("abcef");
         trie.addWord("abce");
 
-        String maxMatch = trie.getMaxMatchWord("abcedfdddd");
-        System.out.println(maxMatch);
+//        String maxMatch = trie.getMaxMatchWord("abcedfdddd");
+//        System.out.println(maxMatch);
 
+        System.out.println(trie.startsWith("abc"));
     }
 }

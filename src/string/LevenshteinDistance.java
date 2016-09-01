@@ -52,7 +52,7 @@ public class LevenshteinDistance {
             // 去匹配str2
             for (j = 1; j <= m; j++) { // 遍历str2
                 ch2 = str2.charAt(j - 1);
-                temp = ch1 == ch2?0:1;
+                temp = ch1 == ch2 ? 0 : 1;
                 // 左边+1,上边+1, 左上角+temp取最小
                 d[i][j] = min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + temp);
             }
