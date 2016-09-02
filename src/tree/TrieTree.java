@@ -121,13 +121,7 @@ public class TrieTree {
 
         char c = wordSegment.charAt(0);
         int index = c - 'a';
-        if (node.child[index] == null) { // the word does NOT exist
-            return 0;
-        } else {
-            return countWords(node.child[index], wordSegment.substring(1));
-
-        }
-
+        return node.child[index] == null ? 0 : countWords(node.child[index], wordSegment.substring(1));
     }
 
     /**
@@ -175,6 +169,12 @@ public class TrieTree {
      *
      */
     public void removeWord(String word) {
+
+        // 如果word不在trie中,则返回
+        if (countWords(word)==0) {
+            return;
+        }
+
         removeWord(root, word);
     }
 
@@ -185,7 +185,6 @@ public class TrieTree {
      */
     private void removeWord(TrieNode node, String word) {
         if (word.length()==0) {
-
             if (node!=null && node.words!=0) {
                 node.words--;
             }
@@ -243,10 +242,9 @@ public class TrieTree {
         trie.addWord("abcedfdddd");
         trie.addWord("abcef");
         trie.addWord("abce");
+        trie.removeWord("a");
 
 //        String maxMatch = trie.getMaxMatchWord("abcedfdddd");
 //        System.out.println(maxMatch);
-
-        System.out.println(trie.startsWith("abc"));
     }
 }
