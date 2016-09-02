@@ -244,7 +244,7 @@ public class TrieTree {
         trie.addWord("abce");
         trie.removeWord("a");
 
-//        String maxMatch = trie.getMaxMatchWord("abcedfdddd");
-//        System.out.println(maxMatch);
+        String maxMatch = trie.getMaxMatchWord("abceffff");
+        System.out.println(maxMatch);
     }
 }
