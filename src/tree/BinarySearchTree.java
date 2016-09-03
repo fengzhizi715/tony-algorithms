@@ -20,8 +20,8 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
         E value; //元素对象
         Node<E> parent; //父节点
-        Node<E> left; //左孩子节点
-        Node<E> right; //右孩子节点
+        Node<E> left;   //左孩子节点
+        Node<E> right;  //右孩子节点
 
         public Node(E value, Node<E> parent, Node<E> left, Node<E> right) {
             this.value = value;
@@ -133,10 +133,13 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
     /**
      * 执行删除操作
+     * @param cur
+     * @return
      */
     private boolean doDelete(Node<T> cur) {
         //该节点是否为根
         boolean isRoot = cur == root;
+
         //1.该节点为叶子节点, 直接将其父节点对应(左或右)孩子置空
         if (cur.left == null && cur.right == null){
             if (isRoot) return true; //若树只有一个根节点
@@ -154,17 +157,19 @@ public class BinarySearchTree<T extends Comparable<T>> {
             doDelete(replaceNode);
             cur.value = replaceNode.value;
             return true;
-        } else{ //3.该节点有1个孩子, 直接将其父节点对应(左或右)孩子接到其非空孩子
+        } else{ //3.该节点有一个孩子，将其孩子接上其父节点：
             Node<T> needLinkedNode = null;
             if (cur.left == null && cur.right != null){ //该节点有右孩子
                 needLinkedNode = cur.right;
             } else if(cur.left != null && cur.right == null){ //该节点有左孩子
                 needLinkedNode = cur.left;
             }
+
             if(isRoot){ //若该节点为根
                 root = needLinkedNode;
                 return true;
             }
+
             if (cur == cur.parent.right)  //该节点为父节点右孩子
                 cur.parent.right = needLinkedNode;
             else
@@ -291,7 +296,9 @@ public class BinarySearchTree<T extends Comparable<T>> {
         bsTree.insert(12);
         bsTree.insert(100);
         System.out.println(bsTree.search(11));
+        System.out.println(bsTree.getCount());
         bsTree.delete(11);
         System.out.println(bsTree.search(11));
+        System.out.println(bsTree.getCount());
     }
 }
