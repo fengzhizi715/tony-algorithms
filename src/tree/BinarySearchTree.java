@@ -43,7 +43,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
      * 获取根节点
      * @return
      */
-    public Node getRoot() {
+    public Node<T> getRoot() {
         return root;
     }
 
@@ -97,19 +97,9 @@ public class BinarySearchTree<T extends Comparable<T>> {
     /**
      * 查找元素
      * @param t 待查找元素
-     * @return 对应元素或null
+     * @return 对应的节点或null
      */
-    public T get(T t) {
-        Node<T> n = getN(t);
-        return n == null? null : n.value;
-    }
-
-    /**
-     * 查找节点
-     * @param t 待查找元素
-     * @return 元素对应节点或null
-     */
-    private Node<T> getN(T t) {
+    public Node<T> search(T t) {
         Node<T> cur = root;
         while (cur != null){
             if (cur.value.compareTo(t) < 0){ //右边子树找
@@ -121,6 +111,106 @@ public class BinarySearchTree<T extends Comparable<T>> {
             }
         }
         return cur;
+    }
+
+    /**
+     * 移除某元素
+     * @param t 待删除元素
+     * @return 删除成功返回true, 反之false
+     */
+    public boolean delete(T t){
+        //找到该节点
+        Node<T> cur = search(t);
+        if (cur != null){
+            if (doDelete(cur)){
+                cur=null;
+                count--;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 执行删除操作
+     */
+    private boolean doDelete(Node<T> cur) {
+        //该节点是否为根
+        boolean isRoot = cur == root;
+        //1.该节点为叶子节点, 直接将其父节点对应(左或右)孩子置空
+        if (cur.left == null && cur.right == null){
+            if (isRoot) return true; //若树只有一个根节点
+            if (cur == cur.parent.right) //该节点为父节点的右孩子
+                cur.parent.right = null;
+            else					//该节点为父节点的左孩子
+                cur.parent.left = null;
+            return true;
+        } else if(cur.left != null && cur.right != null){
+            //2.该节点有2个孩子, 我们先找出一个替换节点(该节点的后继节点，后继节点没有则前驱节点)
+            //找到其后继节点
+            Node<T> replaceNode = locateNextN(cur);
+            if (replaceNode == null) //若没有后继节点则用前驱节点
+                replaceNode = locatePrevN(cur);
+            doDelete(replaceNode);
+            cur.value = replaceNode.value;
+            return true;
+        } else{ //3.该节点有1个孩子, 直接将其父节点对应(左或右)孩子接到其非空孩子
+            Node<T> needLinkedNode = null;
+            if (cur.left == null && cur.right != null){ //该节点有右孩子
+                needLinkedNode = cur.right;
+            } else if(cur.left != null && cur.right == null){ //该节点有左孩子
+                needLinkedNode = cur.left;
+            }
+            if(isRoot){ //若该节点为根
+                root = needLinkedNode;
+                return true;
+            }
+            if (cur == cur.parent.right)  //该节点为父节点右孩子
+                cur.parent.right = needLinkedNode;
+            else
+                cur.parent.left = needLinkedNode;
+            return true;
+        }
+    }
+
+    /**
+     * 定位到前驱节点
+     * @param cur 当前节点
+     * @return 当前节点的前驱节点
+     */
+    private Node<T> locatePrevN(Node<T> cur){
+        if (cur != null){
+            //1.如果该节点左子树不会空，则其前驱为其左子树的最大元素
+            if (cur.left != null) return maxN(cur.left);
+            //2.该节点左子树为空, 则其前驱为：其祖先节点(递归), 且该祖先节点的右孩子也是其祖先节点
+            //  通俗的说，一直忘上找找到左拐后那个节点;
+            Node<T> p = cur.parent;
+            while(p != null && cur == p.left){
+                cur = p;
+                p = p.parent;
+            }
+            return p == null ? null: p;
+        }
+        return null;
+    }
+
+    /**
+     * 定位到当前节点的后继节点
+     * @param cur 当前节点
+     * @return 当前节点的后继节点
+     */
+    private Node<T> locateNextN(Node<T> cur) {
+        if (cur == null) return null;
+        //1.若其右子树不为空，那么其后继节点就是其右子树的最小元素
+        if (cur.right != null) return minN(cur.right);
+        //2.若为空，应该为其祖先节点(递归)，且该祖先节点的左孩子也是其祖先节点
+        //  通俗的说，一直忘上找，找到右拐后那个节点;
+        Node<T> p = cur.parent;
+        while (p != null && cur == p.right){
+            cur = p;
+            p = p.parent;
+        }
+        return p;
     }
 
     /**
@@ -200,7 +290,8 @@ public class BinarySearchTree<T extends Comparable<T>> {
         bsTree.insert(1);
         bsTree.insert(12);
         bsTree.insert(100);
-
-        System.out.println(bsTree.getCount());
+        System.out.println(bsTree.search(11));
+        bsTree.delete(11);
+        System.out.println(bsTree.search(11));
     }
 }
