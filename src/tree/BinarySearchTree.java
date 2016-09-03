@@ -48,15 +48,25 @@ public class BinarySearchTree<T extends Comparable<T>> {
     }
 
     /**
+     * 返回BST的节点数
+     * @return
+     */
+    public int getCount() {
+        return count;
+    }
+
+    /**
      * 插入元素
      * @param t 待插入元素
      * @return 插入成功返回true, 反之返回false
      */
     public boolean insert(T t){
-        if (root == null){ //若为空树
+        if (root == null){ //若为空树, 插入的节点为root节点
             root = new Node<T>(t, null, null, null);
+            count++;
             return true;
         }
+
         Node<T> newNode = new Node<T>(t, null, null, null);
         Node<T> pointer = root;
         while(true){
@@ -190,5 +200,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
         bsTree.insert(1);
         bsTree.insert(12);
         bsTree.insert(100);
+
+        System.out.println(bsTree.getCount());
     }
 }
