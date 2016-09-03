@@ -11,7 +11,7 @@ package tree;
 public class BinarySearchTree<T extends Comparable<T>> {
 
     private Node<T> root; // tree root
-    private int count;	// tree element counts
+    private int count;	  // tree element counts
 
     /**
      * BST的内部节点类
@@ -37,6 +37,14 @@ public class BinarySearchTree<T extends Comparable<T>> {
                     .valueOf(right.value));
             return "(" + leftkey + " , " + value + " , " + rightkey + ")";
         }
+    }
+
+    /**
+     * 获取根节点
+     * @return
+     */
+    public Node getRoot() {
+        return root;
     }
 
     /**
@@ -164,6 +172,14 @@ public class BinarySearchTree<T extends Comparable<T>> {
         }
     }
 
+    /**
+     * 判断BST是否为空
+     * @return
+     */
+    public boolean isEmpty() {
+        return root == null;
+    }
+
     public static void main(String[] args) {
 
         BinarySearchTree bsTree = new BinarySearchTree();
@@ -174,7 +190,5 @@ public class BinarySearchTree<T extends Comparable<T>> {
         bsTree.insert(1);
         bsTree.insert(12);
         bsTree.insert(100);
-
-        bsTree.leftRootRight();
     }
 }
