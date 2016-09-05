@@ -6,6 +6,7 @@ package tree;
  * 2) 若右子树不空，则右子树上所有结点的值均大于它的根结点的值；
  * 3) 左、右子树也分别为BST；
  * 4) 没有键值相等的结点。
+ *
  * Created by tony on 16/8/27.
  */
 public class BinarySearchTree<T extends Comparable<T>> {
@@ -142,13 +143,16 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
         //1.该节点为叶子节点, 直接将其父节点对应(左或右)孩子置空
         if (cur.left == null && cur.right == null){
+
             if (isRoot) return true; //若树只有一个根节点
+
             if (cur == cur.parent.right) //该节点为父节点的右孩子
                 cur.parent.right = null;
             else					//该节点为父节点的左孩子
                 cur.parent.left = null;
             return true;
         } else if(cur.left != null && cur.right != null){
+
             //2.该节点有2个孩子, 我们先找出一个替换节点(该节点的后继节点，后继节点没有则前驱节点)
             //找到其后继节点
             Node<T> replaceNode = locateNextN(cur);
