@@ -57,7 +57,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
     }
 
     /**
-     * 插入元素
+     * 插入元素,如果该元素在tree中已经包含则无法插入该树
      * @param t 待插入元素
      * @return 插入成功返回true, 反之返回false
      */
@@ -134,6 +134,10 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
     /**
      * 执行删除操作
+     * 删除可以分为三种情况:
+     * 1.该节点为叶子节点，直接删除
+     * 2.该节点有一个孩子，将其孩子接上其父节点
+     * 3.该节点有2个孩子，先删除其右子树的最小元素(该元素最多只会有一个孩子)，将这个最小元素去替换要删除的节点
      * @param cur
      * @return
      */
@@ -144,11 +148,11 @@ public class BinarySearchTree<T extends Comparable<T>> {
         //1.该节点为叶子节点, 直接将其父节点对应(左或右)孩子置空
         if (cur.left == null && cur.right == null){
 
-            if (isRoot) return true; //若树只有一个根节点
+            if (isRoot) return true;     //若树只有一个根节点
 
             if (cur == cur.parent.right) //该节点为父节点的右孩子
                 cur.parent.right = null;
-            else					//该节点为父节点的左孩子
+            else					     //该节点为父节点的左孩子
                 cur.parent.left = null;
             return true;
         } else if(cur.left != null && cur.right != null){
@@ -163,7 +167,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
             return true;
         } else{ //3.该节点有一个孩子，将其孩子接上其父节点：
             Node<T> needLinkedNode = null;
-            if (cur.left == null && cur.right != null){ //该节点有右孩子
+            if (cur.left == null && cur.right != null){       //该节点有右孩子
                 needLinkedNode = cur.right;
             } else if(cur.left != null && cur.right == null){ //该节点有左孩子
                 needLinkedNode = cur.left;
