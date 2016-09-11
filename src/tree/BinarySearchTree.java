@@ -17,7 +17,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
     /**
      * BST的内部节点类
      */
-    private static class Node<E>{
+    public static class Node<E>{
 
         E value; //元素对象
         Node<E> parent; //父节点
@@ -29,6 +29,11 @@ public class BinarySearchTree<T extends Comparable<T>> {
             this.parent = parent;
             this.left = left;
             this.right = right;
+        }
+
+        public boolean hasSubNode() {
+
+            return left!=null || right!=null;
         }
 
         public String toString() {
@@ -54,6 +59,23 @@ public class BinarySearchTree<T extends Comparable<T>> {
      */
     public int getCount() {
         return count;
+    }
+
+    /**
+     * 取得二叉树的深度
+     * @param node
+     * @return
+     */
+    public int getDepth(Node node){
+
+        if (node == null) {
+            return 0;
+        }
+
+        int leftDepth = getDepth(node.left);
+        int rightDepth = getDepth(node.right);
+
+        return leftDepth > rightDepth ? leftDepth + 1 : rightDepth + 1;
     }
 
     /**
@@ -303,10 +325,11 @@ public class BinarySearchTree<T extends Comparable<T>> {
         bsTree.insert(1);
         bsTree.insert(12);
         bsTree.insert(100);
-        System.out.println(bsTree.search(11));
-        System.out.println(bsTree.getCount());
-        bsTree.delete(11);
-        System.out.println(bsTree.search(11));
-        System.out.println(bsTree.getCount());
+        System.out.println(bsTree.search(100).hasSubNode());
+        System.out.println(bsTree.getDepth(bsTree.getRoot()));
+//        System.out.println(bsTree.getCount());
+//        bsTree.delete(11);
+//        System.out.println(bsTree.search(11));
+//        System.out.println(bsTree.getCount());
     }
 }
