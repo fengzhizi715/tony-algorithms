@@ -11,16 +11,7 @@ package tree;
  */
 public class BinarySearchTree<T extends Comparable<T>> extends Tree {
 
-    private Node<T> root; // tree root
     private int count;	  // tree element counts
-
-    /**
-     * 获取根节点
-     * @return
-     */
-    public Node<T> getRoot() {
-        return root;
-    }
 
     /**
      * 返回BST的节点数
@@ -28,23 +19,6 @@ public class BinarySearchTree<T extends Comparable<T>> extends Tree {
      */
     public int getCount() {
         return count;
-    }
-
-    /**
-     * 取得二叉树的深度
-     * @param node
-     * @return
-     */
-    public int getDepth(Node node){
-
-        if (node == null) {
-            return 0;
-        }
-
-        int leftDepth = getDepth(node.left);
-        int rightDepth = getDepth(node.right);
-
-        return leftDepth > rightDepth ? leftDepth + 1 : rightDepth + 1;
     }
 
     /**
@@ -258,31 +232,6 @@ public class BinarySearchTree<T extends Comparable<T>> extends Tree {
         return max;
     }
 
-    /**
-     * 中序遍历
-     */
-    public void leftRootRight(){
-        printLRR(root);
-    }
-
-    /**
-     * 中序遍历打印元素
-     */
-    private void printLRR(Node<T> node) {
-        if (node != null){
-            printLRR(node.left);
-            System.out.println(node.value);
-            printLRR(node.right);
-        }
-    }
-
-    /**
-     * 判断BST是否为空
-     * @return
-     */
-    public boolean isEmpty() {
-        return root == null;
-    }
 
     public static void main(String[] args) {
 
@@ -294,8 +243,8 @@ public class BinarySearchTree<T extends Comparable<T>> extends Tree {
         bsTree.insert(1);
         bsTree.insert(12);
         bsTree.insert(100);
-        bsTree.leftRootRight();
-//        System.out.println(bsTree.getCount());
+        bsTree.traverseByLevelFromTop(bsTree.root);
+        System.out.println(bsTree.search(13));
 //        bsTree.delete(11);
 //        System.out.println(bsTree.search(11));
 //        System.out.println(bsTree.getCount());

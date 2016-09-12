@@ -9,13 +9,29 @@ import java.util.Stack;
  */
 public class Tree<T> {
 
-    private Node<T> root;   //根节点
+    Node<T> root;   //根节点
 
     public Tree() {
     }
 
     public Tree(Node<T> root) {
         this.root = root;
+    }
+
+    /**
+     * 判断树是否为空
+     * @return
+     */
+    public boolean isEmpty() {
+        return root == null;
+    }
+
+    /**
+     * 获取根节点
+     * @return
+     */
+    public Node<T> getRoot() {
+        return root;
     }
 
     /**
@@ -190,8 +206,8 @@ public class Tree<T> {
         Node<String> root = new Node<String>("A", lchild, rchild);
 
         Tree<String> tree = new Tree<String>(root);
-//        tree.preorder(tree.root);
-//        System.out.println(tree.getDepth(tree.root));
+        tree.preorder(tree.root);
+        System.out.println(tree.getDepth(tree.root));
         tree.traverseByLevelFromTop(tree.root);
     }
 }
