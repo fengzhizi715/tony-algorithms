@@ -7,19 +7,18 @@ package tree;
  */
 public class BalancedBinaryTree extends BinarySearchTree {
 
+
+
     /**
      * 判断是否平衡二叉树
      * @param node
      * @return
      */
-    public boolean isBalance(Node node){
-        if (node==null)
+    public boolean isBalance(Node node) {
+        if (node == null)
             return true;
         int dis = getDepth(node.left) - getDepth(node.right);
 
-        if (dis>1 || dis<-1 )
-            return false;
-        else
-            return isBalance(node.left) && isBalance(node.right);
+        return Math.abs(dis) <= 1 ? isBalance(node.left) && isBalance(node.right) : false;
     }
 }

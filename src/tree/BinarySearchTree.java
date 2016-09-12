@@ -24,6 +24,13 @@ public class BinarySearchTree<T extends Comparable<T>> {
         Node<E> left;   //左孩子节点
         Node<E> right;  //右孩子节点
 
+        public Node(E value) {
+            this.value = value;
+            this.parent = null;
+            this.left = null;
+            this.right = null;
+        }
+
         public Node(E value, Node<E> parent, Node<E> left, Node<E> right) {
             this.value = value;
             this.parent = parent;
@@ -85,7 +92,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
      */
     public boolean insert(T t){
         if (root == null){ //若为空树, 插入的节点为root节点
-            root = new Node<T>(t, null, null, null);
+            root = new Node<T>(t);
             count++;
             return true;
         }
@@ -325,8 +332,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
         bsTree.insert(1);
         bsTree.insert(12);
         bsTree.insert(100);
-        System.out.println(bsTree.search(100).hasSubNode());
-        System.out.println(bsTree.getDepth(bsTree.getRoot()));
+        bsTree.leftRootRight();
 //        System.out.println(bsTree.getCount());
 //        bsTree.delete(11);
 //        System.out.println(bsTree.search(11));

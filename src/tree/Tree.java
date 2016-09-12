@@ -16,35 +16,14 @@ public class Tree<T> {
     }
 
     /**
-     * 二叉树的节点
-     * @param <T>
-     */
-    private static class Node<T> {
-
-        T element;  //节点的值
-
-        Node<T> lchild, rchild; //左右孩子节点
-
-        public Node(T element) {
-            this.element = element;
-        }
-
-        public Node(T element, Node<T> lchild, Node<T> rchild) {
-            this.element = element;
-            this.lchild = lchild;
-            this.rchild = rchild;
-        }
-    }
-
-    /**
      * 先序遍历
      * @param root
      */
     public void preorder(Node<T> root) {
         if(root != null) {
             System.out.println(root.element);
-            preorder(root.lchild);
-            preorder(root.rchild);
+            preorder(root.left);
+            preorder(root.right);
         }
     }
 
@@ -54,9 +33,9 @@ public class Tree<T> {
      */
     public void inorder(Node<T> root) {
         if (root != null) {
-            inorder(root.lchild);
+            inorder(root.left);
             System.out.println(root.element);
-            inorder(root.rchild);
+            inorder(root.right);
         }
     }
 
@@ -66,8 +45,8 @@ public class Tree<T> {
      */
     public void postorder(Node<T> root) {
         if (root != null) {
-            postorder(root.lchild);
-            postorder(root.rchild);
+            postorder(root.left);
+            postorder(root.right);
             System.out.println(root.element);
         }
     }
@@ -83,10 +62,10 @@ public class Tree<T> {
             while (!stack.empty()) {
                 root = stack.pop();
                 System.out.println(root.element);
-                if (root.rchild != null)
-                    stack.push(root.rchild);
-                if (root.lchild != null)
-                    stack.push(root.lchild);
+                if (root.right != null)
+                    stack.push(root.right);
+                if (root.left != null)
+                    stack.push(root.left);
             }
         }
     }
@@ -99,13 +78,13 @@ public class Tree<T> {
         Stack<Node> stack = new Stack<Node>();
         while (root != null) {
             while (root != null) {
-                if (root.rchild != null)
-                    stack.push(root.rchild);// 当前节点右子入栈
+                if (root.right != null)
+                    stack.push(root.right);// 当前节点右子入栈
                 stack.push(root);// 当前节点入栈
-                root = root.lchild;
+                root = root.left;
             }
             root = stack.pop();
-            while (!stack.empty() && root.rchild == null) {
+            while (!stack.empty() && root.right == null) {
                 System.out.println(root.element);
                 root = stack.pop();
             }
@@ -126,10 +105,10 @@ public class Tree<T> {
         Stack<Node> stack = new Stack<Node>();
         while (root != null) {
             // 左子树入栈
-            for (; root.lchild != null; root = root.lchild)
+            for (; root.left != null; root = root.left)
                 stack.push(root);
             // 当前节点无右子或右子已经输出
-            while (root != null && (root.rchild == null || root.rchild == q)) {
+            while (root != null && (root.right == null || root.right == q)) {
                 System.out.println(root.element);
                 q = root;// 记录上一个已输出节点
                 if (stack.empty())
@@ -138,7 +117,7 @@ public class Tree<T> {
             }
             // 处理右子
             stack.push(root);
-            root = root.rchild;
+            root = root.right;
         }
     }
 
@@ -154,8 +133,8 @@ public class Tree<T> {
             return 0;
         }
 
-        int leftDepth = getDepth(root.lchild);
-        int rightDepth = getDepth(root.rchild);
+        int leftDepth = getDepth(root.left);
+        int rightDepth = getDepth(root.right);
 
         return leftDepth > rightDepth ? leftDepth + 1 : rightDepth + 1;
     }
@@ -181,12 +160,12 @@ public class Tree<T> {
             System.out.print(curNode.element + " ");
             outCount++;
 
-            if (curNode.lchild != null) {
-                queue.addLast(curNode.lchild);
+            if (curNode.left != null) {
+                queue.addLast(curNode.left);
             }
 
-            if (curNode.rchild != null) {
-                queue.addLast(curNode.rchild);
+            if (curNode.right != null) {
+                queue.addLast(curNode.right);
             }
 
             //用inCount记录某层有多少个元素，outCount记录当前输出了多少个元素；当inCount==outCount时，就说明某层元素已经完全输出，此时应该换行(outCount清零)
