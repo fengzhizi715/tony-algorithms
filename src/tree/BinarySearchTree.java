@@ -9,48 +9,10 @@ package tree;
  *
  * Created by tony on 16/8/27.
  */
-public class BinarySearchTree<T extends Comparable<T>> {
+public class BinarySearchTree<T extends Comparable<T>> extends Tree {
 
     private Node<T> root; // tree root
     private int count;	  // tree element counts
-
-    /**
-     * BST的内部节点类
-     */
-    public static class Node<E>{
-
-        E value; //元素对象
-        Node<E> parent; //父节点
-        Node<E> left;   //左孩子节点
-        Node<E> right;  //右孩子节点
-
-        public Node(E value) {
-            this.value = value;
-            this.parent = null;
-            this.left = null;
-            this.right = null;
-        }
-
-        public Node(E value, Node<E> parent, Node<E> left, Node<E> right) {
-            this.value = value;
-            this.parent = parent;
-            this.left = left;
-            this.right = right;
-        }
-
-        public boolean hasSubNode() {
-
-            return left!=null || right!=null;
-        }
-
-        public String toString() {
-            String leftkey = (left == null ? "" : String
-                    .valueOf(left.value));
-            String rightkey = (right == null ? "" : String
-                    .valueOf(right.value));
-            return "(" + leftkey + " , " + value + " , " + rightkey + ")";
-        }
-    }
 
     /**
      * 获取根节点

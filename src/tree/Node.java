@@ -6,17 +6,39 @@ package tree;
  */
 public class Node<T> {
 
-    T element;  //节点的值
+    T value;  //节点的值
 
-    Node<T> left, right; //左右孩子节点
+    Node<T> parent; //父节点
+    Node<T> left;   //左孩子节点
+    Node<T> right;  //右孩子节点
 
-    public Node(T element) {
-        this.element = element;
+    public Node(T value) {
+        this.value = value;
     }
 
-    public Node(T element, Node<T> left, Node<T> right) {
-        this.element = element;
+    public Node(T value, Node<T> left, Node<T> right) {
+        this.value = value;
         this.left = left;
         this.right = right;
+    }
+
+    public Node(T value, Node<T> parent, Node<T> left, Node<T> right) {
+        this.value = value;
+        this.parent = parent;
+        this.left = left;
+        this.right = right;
+    }
+
+    public boolean hasSubNode() {
+
+        return left!=null || right!=null;
+    }
+
+    public String toString() {
+        String leftkey = (left == null ? "" : String
+                .valueOf(left.value));
+        String rightkey = (right == null ? "" : String
+                .valueOf(right.value));
+        return "(" + leftkey + " , " + value + " , " + rightkey + ")";
     }
 }

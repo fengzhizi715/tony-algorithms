@@ -11,6 +11,9 @@ public class Tree<T> {
 
     private Node<T> root;   //根节点
 
+    public Tree() {
+    }
+
     public Tree(Node<T> root) {
         this.root = root;
     }
@@ -21,7 +24,7 @@ public class Tree<T> {
      */
     public void preorder(Node<T> root) {
         if(root != null) {
-            System.out.println(root.element);
+            System.out.println(root.value);
             preorder(root.left);
             preorder(root.right);
         }
@@ -34,7 +37,7 @@ public class Tree<T> {
     public void inorder(Node<T> root) {
         if (root != null) {
             inorder(root.left);
-            System.out.println(root.element);
+            System.out.println(root.value);
             inorder(root.right);
         }
     }
@@ -47,7 +50,7 @@ public class Tree<T> {
         if (root != null) {
             postorder(root.left);
             postorder(root.right);
-            System.out.println(root.element);
+            System.out.println(root.value);
         }
     }
 
@@ -61,7 +64,7 @@ public class Tree<T> {
             stack.push(root);
             while (!stack.empty()) {
                 root = stack.pop();
-                System.out.println(root.element);
+                System.out.println(root.value);
                 if (root.right != null)
                     stack.push(root.right);
                 if (root.left != null)
@@ -85,10 +88,10 @@ public class Tree<T> {
             }
             root = stack.pop();
             while (!stack.empty() && root.right == null) {
-                System.out.println(root.element);
+                System.out.println(root.value);
                 root = stack.pop();
             }
-            System.out.println(root.element);
+            System.out.println(root.value);
             if (!stack.empty())
                 root = stack.pop();
             else
@@ -109,7 +112,7 @@ public class Tree<T> {
                 stack.push(root);
             // 当前节点无右子或右子已经输出
             while (root != null && (root.right == null || root.right == q)) {
-                System.out.println(root.element);
+                System.out.println(root.value);
                 q = root;// 记录上一个已输出节点
                 if (stack.empty())
                     return;
@@ -157,7 +160,7 @@ public class Tree<T> {
         while (!queue.isEmpty()) {
 
             curNode = queue.pollFirst();
-            System.out.print(curNode.element + " ");
+            System.out.print(curNode.value + " ");
             outCount++;
 
             if (curNode.left != null) {
