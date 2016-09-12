@@ -35,6 +35,13 @@ public class Tree<T> {
     }
 
     /**
+     * 清空二叉树
+     */
+    public void clear(){
+        root=null;
+    }
+
+    /**
      * 先序遍历
      * @param root
      */
@@ -206,8 +213,9 @@ public class Tree<T> {
         Node<String> root = new Node<String>("A", lchild, rchild);
 
         Tree<String> tree = new Tree<String>(root);
-        tree.preorder(tree.root);
-        System.out.println(tree.getDepth(tree.root));
+//        tree.preorder(tree.root);
+//        System.out.println(tree.getDepth(tree.root));
         tree.traverseByLevelFromTop(tree.root);
+        System.out.println();
     }
 }

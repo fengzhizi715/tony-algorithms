@@ -5,7 +5,8 @@ package tree;
  * 1) 若左子树不空，则左子树上所有结点的值均小于它的根结点的值；
  * 2) 若右子树不空，则右子树上所有结点的值均大于它的根结点的值；
  * 3) 左、右子树也分别为BST；
- * 4) 没有键值相等的结点。
+ * 4) 没有键值相等的结点；
+ * 5) 通过中序遍历可得到从小到大的序列,因而二叉查找树常用于快速查找,排序等场合。
  *
  * Created by tony on 16/8/27.
  */
@@ -232,7 +233,6 @@ public class BinarySearchTree<T extends Comparable<T>> extends Tree {
         return max;
     }
 
-
     public static void main(String[] args) {
 
         BinarySearchTree bsTree = new BinarySearchTree();
@@ -244,7 +244,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends Tree {
         bsTree.insert(12);
         bsTree.insert(100);
         bsTree.traverseByLevelFromTop(bsTree.root);
-        System.out.println(bsTree.search(13));
+//        System.out.println(bsTree.getCount());
 //        bsTree.delete(11);
 //        System.out.println(bsTree.search(11));
 //        System.out.println(bsTree.getCount());
