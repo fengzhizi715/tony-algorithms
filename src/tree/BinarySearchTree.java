@@ -238,15 +238,19 @@ public class BinarySearchTree<T extends Comparable<T>> extends Tree {
         BinarySearchTree bsTree = new BinarySearchTree();
 
         bsTree.insert(10);
-        bsTree.insert(10);
-        bsTree.insert(11);
-        bsTree.insert(1);
+        bsTree.insert(13);
+        bsTree.insert(6);
+        bsTree.insert(5);
         bsTree.insert(12);
         bsTree.insert(100);
-        bsTree.traverseByLevelFromTop(bsTree.root);
+        bsTree.insert(7);
+        bsTree.insert(10);
+        bsTree.insert(79);
+//        bsTree.traverseByLevelFromTop(bsTree.root);
 //        System.out.println(bsTree.getCount());
 //        bsTree.delete(11);
 //        System.out.println(bsTree.search(11));
 //        System.out.println(bsTree.getCount());
+        bsTree.printTree();
     }
 }

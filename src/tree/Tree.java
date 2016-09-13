@@ -208,8 +208,49 @@ public class Tree<T> {
         }
     }
 
+    public void printTree() {
+        printSubtree(root);
+    }
+
+    public void printSubtree(Node node) {
+        if (node.right != null) {
+            printTree(node.right, true, "");
+        }
+        printNodeValue(node);
+        if (node.left != null) {
+            printTree(node.left, false, "");
+        }
+    }
+
+    private void printNodeValue(Node node) {
+        if (node.value == null) {
+            System.out.print("<null>");
+        } else {
+            System.out.print(node.value.toString());
+        }
+        System.out.println();
+    }
+
+    private void printTree(Node node, boolean isRight, String indent) {
+        if (node.right != null) {
+            printTree(node.right, true, indent + (isRight ? "        " : " |      "));
+        }
+        System.out.print(indent);
+        if (isRight) {
+            System.out.print(" /");
+        } else {
+            System.out.print(" \\");
+        }
+        System.out.print("----- ");
+        printNodeValue(node);
+        if (node.left != null) {
+            printTree(node.left, false, indent + (isRight ? " |      " : "        "));
+        }
+    }
+
     public static void main(String[] args) {
-        Node<String> j = new Node<String>("JJJ");
+        Node<String> k = new Node<String>("K");
+        Node<String> j = new Node<String>("J");
         Node<String> i = new Node<String>("I");
         Node<String> h = new Node<String>("H");
         Node<String> g = new Node<String>("G");
@@ -226,9 +267,11 @@ public class Tree<T> {
         f.right = h;
         f.left = i;
         h.right = j;
+        b.left = k;
         Tree<String> tree = new Tree<String>(root);
 //        tree.preorder(tree.root);
 //        System.out.println(tree.getDepth());
-        tree.traverseByLevelFromTop(tree.root);
+//        tree.traverseByLevelFromTop(tree.root);
+        tree.printTree();
     }
 }

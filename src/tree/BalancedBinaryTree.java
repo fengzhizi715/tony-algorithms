@@ -7,13 +7,25 @@ package tree;
  */
 public class BalancedBinaryTree<T extends Comparable<T>> extends BinarySearchTree {
 
+    /**
+     * 平衡二叉树的节点
+     * @param <T>
+     */
+    public static class AVLNode<T> extends Node {
+
+        public int height;
+
+        public AVLNode(int value, Node parent, Node left, Node right) {
+            super(value, parent, left, right);
+        }
+    }
 
     /**
      * 判断是否平衡二叉树
      * @param node
      * @return
      */
-    public boolean isBalance(Node node) {
+    public boolean isBalance(Node<T> node) {
         if (node == null)
             return true;
         int dis = Node.getDepth(node.left) - Node.getDepth(node.right);
