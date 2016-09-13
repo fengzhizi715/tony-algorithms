@@ -27,11 +27,11 @@ public class BinarySearchTree<T extends Comparable<T>> extends Tree {
      * @param t 待插入元素
      * @return 插入成功返回true, 反之返回false
      */
-    public boolean insert(T t){
+    public Node<T> insert(T t){
         if (root == null){ //若为空树, 插入的节点为root节点
             root = new Node<T>(t);
             count++;
-            return true;
+            return root;
         }
 
         Node<T> newNode = new Node<T>(t, null, null, null);
@@ -42,7 +42,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends Tree {
                     newNode.parent = pointer;
                     pointer.right = newNode;
                     count++;
-                    return true;
+                    return newNode;
                 } else{
                     pointer = pointer.right;
                 }
@@ -51,12 +51,12 @@ public class BinarySearchTree<T extends Comparable<T>> extends Tree {
                     newNode.parent = pointer;
                     pointer.left = newNode;
                     count++;
-                    return true;
+                    return newNode;
                 } else{
                     pointer = pointer.left;
                 }
-            } else { //相等了,无法插入该树
-                return false;
+            } else { //相等了,无法插入该树, 返回pointer
+                return pointer;
             }
         }
     }

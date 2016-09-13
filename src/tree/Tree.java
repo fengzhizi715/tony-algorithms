@@ -150,19 +150,20 @@ public class Tree<T> {
     /**
      * 取得二叉树的深度.
      *
-     * @param root
      * @return the depth
      */
-    public int getDepth(Node<T> root) {
+    public int getDepth() {
 
-        if (root == null) {
-            return 0;
-        }
+        return Node.getDepth(root);
+    }
 
-        int leftDepth = getDepth(root.left);
-        int rightDepth = getDepth(root.right);
-
-        return leftDepth > rightDepth ? leftDepth + 1 : rightDepth + 1;
+    /**
+     * 获取二叉树的节点数
+     *
+     * @return
+     */
+    public int counter() {
+        return Node.counter(root);
     }
 
     /**
@@ -206,16 +207,21 @@ public class Tree<T> {
 
     public static void main(String[] args) {
         Node<String> f = new Node<String>("F");
-        Node<String> d = new Node<String>("D",f,null);
+        Node<String> d = new Node<String>("D");
         Node<String> e = new Node<String>("E");
-        Node<String> lchild = new Node<String>("B", null, d);
-        Node<String> rchild = new Node<String>("C", e, null);
-        Node<String> root = new Node<String>("A", lchild, rchild);
-
+        Node<String> b = new Node<String>("B");
+        Node<String> c = new Node<String>("C");
+        Node<String> root = new Node<String>("A",b,c);
+        b.parent = root;
+        b.right = e;
+        c.parent = root;
+        c.left = d;
+        d.right = f;
         Tree<String> tree = new Tree<String>(root);
 //        tree.preorder(tree.root);
-//        System.out.println(tree.getDepth(tree.root));
+        System.out.println(tree.getDepth());
         tree.traverseByLevelFromTop(tree.root);
-        System.out.println();
+//        System.out.println(d.isLeftChild());
+//        System.out.println(d.isRightChild());
     }
 }
