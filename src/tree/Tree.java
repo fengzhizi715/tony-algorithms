@@ -78,6 +78,7 @@ public class Tree<T> {
     }
 
     /**
+     * 深度优先遍历
      * 非递归实现前序遍历
      * @param root
      */
@@ -163,10 +164,12 @@ public class Tree<T> {
      * @return
      */
     public int counter() {
+
         return Node.counter(root);
     }
 
     /**
+     * 广度优先算法
      * 从上层到下层遍历二叉树
      * @param node
      */
@@ -206,22 +209,26 @@ public class Tree<T> {
     }
 
     public static void main(String[] args) {
+        Node<String> j = new Node<String>("JJJ");
+        Node<String> i = new Node<String>("I");
+        Node<String> h = new Node<String>("H");
+        Node<String> g = new Node<String>("G");
         Node<String> f = new Node<String>("F");
         Node<String> d = new Node<String>("D");
         Node<String> e = new Node<String>("E");
         Node<String> b = new Node<String>("B");
         Node<String> c = new Node<String>("C");
         Node<String> root = new Node<String>("A",b,c);
-        b.parent = root;
-        b.right = e;
-        c.parent = root;
         c.left = d;
-        d.right = f;
+        c.right = f;
+        d.right = e;
+        d.left = g;
+        f.right = h;
+        f.left = i;
+        h.right = j;
         Tree<String> tree = new Tree<String>(root);
 //        tree.preorder(tree.root);
-        System.out.println(tree.getDepth());
+//        System.out.println(tree.getDepth());
         tree.traverseByLevelFromTop(tree.root);
-//        System.out.println(d.isLeftChild());
-//        System.out.println(d.isRightChild());
     }
 }

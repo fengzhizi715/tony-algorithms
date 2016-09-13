@@ -78,7 +78,7 @@ public class Node<T> {
     }
 
     /**
-     * 取得二叉树的深度.
+     * 取得节点的深度.
      *
      * @param node
      * @return the depth
