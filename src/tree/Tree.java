@@ -209,7 +209,10 @@ public class Tree<T> {
     }
 
     public void printTree() {
-        printSubtree(root);
+
+        if (root!=null) {
+            printSubtree(root);
+        }
     }
 
     public void printSubtree(Node node) {

@@ -12,16 +12,6 @@ package tree;
  */
 public class BinarySearchTree<T extends Comparable<T>> extends Tree {
 
-    private int count;	  // tree element counts
-
-    /**
-     * 返回BST的节点数
-     * @return
-     */
-    public int getCount() {
-        return count;
-    }
-
     /**
      * 插入元素,如果该元素在tree中已经包含则无法插入该树
      * @param t 待插入元素
@@ -30,7 +20,6 @@ public class BinarySearchTree<T extends Comparable<T>> extends Tree {
     public Node<T> insert(T t){
         if (root == null){ //若为空树, 插入的节点为root节点
             root = new Node<T>(t);
-            count++;
             return root;
         }
 
@@ -41,7 +30,6 @@ public class BinarySearchTree<T extends Comparable<T>> extends Tree {
                 if (pointer.right == null){ //插入右边
                     newNode.parent = pointer;
                     pointer.right = newNode;
-                    count++;
                     return newNode;
                 } else{
                     pointer = pointer.right;
@@ -50,13 +38,12 @@ public class BinarySearchTree<T extends Comparable<T>> extends Tree {
                 if (pointer.left == null){ //插入左边
                     newNode.parent = pointer;
                     pointer.left = newNode;
-                    count++;
                     return newNode;
                 } else{
                     pointer = pointer.left;
                 }
-            } else { //相等了,无法插入该树, 返回pointer
-                return pointer;
+            } else { //相等了,无法插入该树, 返回null
+                return null;
             }
         }
     }
@@ -91,7 +78,6 @@ public class BinarySearchTree<T extends Comparable<T>> extends Tree {
         if (cur != null){
             if (doDelete(cur)){
                 cur=null;
-                count--;
                 return true;
             }
         }
@@ -246,6 +232,10 @@ public class BinarySearchTree<T extends Comparable<T>> extends Tree {
         bsTree.insert(7);
         bsTree.insert(10);
         bsTree.insert(79);
+        bsTree.insert(8);
+        bsTree.insert(11);
+        bsTree.insert(110);
+        bsTree.insert(14);
 //        bsTree.traverseByLevelFromTop(bsTree.root);
 //        System.out.println(bsTree.getCount());
 //        bsTree.delete(11);
