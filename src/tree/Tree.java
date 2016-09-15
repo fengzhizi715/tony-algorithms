@@ -208,6 +208,9 @@ public class Tree<T> {
         }
     }
 
+    /**
+     * 打印树的形状
+     */
     public void printTree() {
 
         if (root!=null) {
@@ -252,6 +255,7 @@ public class Tree<T> {
     }
 
     public static void main(String[] args) {
+        Node<String> l = new Node<String>("L");
         Node<String> k = new Node<String>("K");
         Node<String> j = new Node<String>("J");
         Node<String> i = new Node<String>("I");
@@ -271,6 +275,7 @@ public class Tree<T> {
         f.left = i;
         h.right = j;
         b.left = k;
+        b.right = l;
         Tree<String> tree = new Tree<String>(root);
 //        tree.preorder(tree.root);
 //        System.out.println(tree.getDepth());
