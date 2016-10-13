@@ -12,6 +12,7 @@ public class Tree<T> {
     Node<T> root;   //根节点
 
     public Tree() {
+        root = null;
     }
 
     public Tree(Node<T> root) {
