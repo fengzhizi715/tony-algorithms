@@ -20,7 +20,7 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> {
 
         if (compareResult < 0) {
             t.left = insert(x, t.left);//将x插入左子树中
-            if (!isBalance(t))//打破平衡
+            if (!isBalance(t))//打破平衡wo
                 if (x.compareTo(t.left.value) < 0)//LL型（左左型）
                     t = rotateWithLeftChild(t);
                 else   //LR型（左右型）
@@ -35,24 +35,6 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> {
         } else
             ;  // 重复数据，什么也不做
 
-        return t;
-    }
-
-    //找最小
-    private Node<T> findMin(Node<T> t) {
-        if (t == null)
-            return t;
-        while (t.left != null)
-            t = t.left;
-        return t;
-    }
-
-    //找最大
-    private Node<T> findMax(Node<T> t) {
-        if (t == null)
-            return t;
-        while (t.right != null)
-            t = t.right;
         return t;
     }
 

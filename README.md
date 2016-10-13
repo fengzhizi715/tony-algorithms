@@ -7,5 +7,6 @@
 ##tree
 * 二叉树
 * 二叉搜索树(BST)
+* 平衡二叉树
 * Trie Tree
 * DoubleArray Trie(DAT)
