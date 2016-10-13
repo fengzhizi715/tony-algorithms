@@ -15,12 +15,11 @@ public class BinarySearchTree<T extends Comparable<T>> extends Tree {
     /**
      * 插入元素,如果该元素在tree中已经包含则无法插入该树
      * @param t 待插入元素
-     * @return 插入成功返回true, 反之返回false
      */
-    public Node<T> insert(T t){
+    public boolean insert(T t){
         if (root == null){ //若为空树, 插入的节点为root节点
             root = new Node<T>(t);
-            return root;
+            return true;
         }
 
         Node<T> newNode = new Node<T>(t, null, null, null);
@@ -30,7 +29,7 @@ public class BinarySearchTree<T extends Comparable<T>> extends Tree {
                 if (pointer.right == null){ //插入右边
                     newNode.parent = pointer;
                     pointer.right = newNode;
-                    return newNode;
+                    return true;
                 } else{
                     pointer = pointer.right;
                 }
@@ -38,12 +37,13 @@ public class BinarySearchTree<T extends Comparable<T>> extends Tree {
                 if (pointer.left == null){ //插入左边
                     newNode.parent = pointer;
                     pointer.left = newNode;
-                    return newNode;
+                    return true;
                 } else{
                     pointer = pointer.left;
                 }
-            } else { //相等了,无法插入该树, 返回null
-                return null;
+                return true;
+            } else { //相等了,无法插入该树
+                return false;
             }
         }
     }
@@ -236,6 +236,8 @@ public class BinarySearchTree<T extends Comparable<T>> extends Tree {
         bsTree.insert(11);
         bsTree.insert(110);
         bsTree.insert(14);
+        bsTree.insert(111);
+        bsTree.insert(112);
 //        bsTree.traverseByLevelFromTop(bsTree.root);
 //        System.out.println("counter()="+bsTree.counter());
 //        bsTree.delete(11);

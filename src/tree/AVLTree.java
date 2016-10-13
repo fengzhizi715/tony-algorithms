@@ -5,132 +5,98 @@ package tree;
  * 且具有以下性质：它是一棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树。
  * Created by tony on 16/9/10.
  */
-public class AVLTree<T extends Comparable<T>> extends SelfBalancingBinarySearchTree {
+public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> {
 
-//    public Node<T> insertAVLNode(T t) {
-//
-//        Node newNode = super.insert(t);
-//
-//        if (newNode == null) return null;
-//
-//        rebalance((newNode);
-//        return newNode;
-//    }
-//
-//    private void rebalance(Node<T> node) {
-//        while (node != null) {
-//
-//            Node parent = node.parent;
-//
-//            int leftHeight = (node.left == null) ? -1 : ((Node) node.left).height;
-//            int rightHeight = (node.right == null) ? -1 : ((Node) node.right).height;
-//            int nodeBalance = rightHeight - leftHeight;
-//            // rebalance (-2 means left subtree outgrow, 2 means right subtree)
-//            if (nodeBalance == 2) {
-//                if (node.right.right != null) {
-//                    node = (Node)avlRotateLeft(node);
-//                    break;
-//                } else {
-//                    node = (Node)doubleRotateRightLeft(node);
-//                    break;
-//                }
-//            } else if (nodeBalance == -2) {
-//                if (node.left.left != null) {
-//                    node = (Node)avlRotateRight(node);
-//                    break;
-//                } else {
-//                    node = (Node)doubleRotateLeftRight(node);
-//                    break;
-//                }
-//            } else {
-//                updateHeight(node);
-//            }
-//
-//            node = parent;
-//        }
-//    }
-//
-//    /**
-//     * Rotates to left side.
-//     */
-//    private Node avlRotateLeft(Node node) {
-//        Node temp = super.rotateLeft(node);
-//
-//        updateHeight((Node)temp.left);
-//        updateHeight((Node)temp);
-//        return temp;
-//    }
-//
-//    /**
-//     * Rotates to right side.
-//     */
-//    private Node avlRotateRight(Node node) {
-//        Node temp = super.rotateRight(node);
-//
-//        updateHeight((Node)temp.right);
-//        updateHeight((Node)temp);
-//        return temp;
-//    }
-//
-//    /**
-//     * Take right child and rotate it to the right side first and then rotate
-//     * node to the left side.
-//     */
-//    protected Node doubleRotateRightLeft(Node node) {
-//        node.right = avlRotateRight(node.right);
-//        return avlRotateLeft(node);
-//    }
-//
-//    /**
-//     * Take right child and rotate it to the right side first and then rotate
-//     * node to the left side.
-//     */
-//    protected Node doubleRotateLeftRight(Node node) {
-//        node.left = avlRotateLeft(node.left);
-//        return avlRotateRight(node);
-//    }
-//
-//    /**
-//     * Updates height and balance of the node.
-//     *
-//     * @param node Node for which height and balance must be updated.
-//     */
-//    private static final void updateHeight(Node node) {
-//        int leftHeight = (node.left == null) ? -1 : ((Node) node.left).height;
-//        int rightHeight = (node.right == null) ? -1 : ((Node) node.right).height;
-//        node.height = 1 + Math.max(leftHeight, rightHeight);
-//    }
-//
-//    /**
-//     * 判断是否平衡二叉树
-//     * @param node
-//     * @return
-//     */
-//    public boolean isBalance(Node<T> node) {
-//        if (node == null)
-//            return true;
-//        int dis = Node.getDepth(node.left) - Node.getDepth(node.right);
-//
-//        return Math.abs(dis) <= 1 ? isBalance(node.left) && isBalance(node.right) : false;
-//    }
-//
-//    public static void main(String[] args) {
-//
-//        AVLTree avlTree = new AVLTree();
-//
-//        avlTree.insertAVLNode(10);
-//        avlTree.insertAVLNode(13);
-//        avlTree.insertAVLNode(6);
-//        avlTree.insertAVLNode(5);
-//        avlTree.insertAVLNode(12);
-//        avlTree.insertAVLNode(100);
-//        avlTree.insertAVLNode(7);
-//        avlTree.insertAVLNode(10);
-//        avlTree.insertAVLNode(79);
-//        avlTree.insertAVLNode(8);
-//        avlTree.insertAVLNode(11);
-//        avlTree.insertAVLNode(110);
-//        avlTree.insertAVLNode(14);
-//        avlTree.printTree();
-//    }
+    //在avl树中插入数据，重复数据复略
+    public void insertT(T x) {
+        root = insert(x, root);
+    }
+
+    private Node<T> insert(T x, Node<T> t) {
+        if (t == null)
+            return new Node<T>(x, null, null, null);
+
+        int compareResult = x.compareTo(t.value);
+
+        if (compareResult < 0) {
+            t.left = insert(x, t.left);//将x插入左子树中
+            if (!isBalance(t))//打破平衡
+                if (x.compareTo(t.left.value) < 0)//LL型（左左型）
+                    t = rotateWithLeftChild(t);
+                else   //LR型（左右型）
+                    t = doubleWithLeftChild(t);
+        } else if (compareResult > 0) {
+            t.right = insert(x, t.right);//将x插入右子树中
+            if (!isBalance(t))//打破平衡
+                if (x.compareTo(t.right.value) > 0)//RR型（右右型）
+                    t = rotateWithRightChild(t);
+                else                           //RL型
+                    t = doubleWithRightChild(t);
+        } else
+            ;  // 重复数据，什么也不做
+
+        return t;
+    }
+
+    //找最小
+    private Node<T> findMin(Node<T> t) {
+        if (t == null)
+            return t;
+        while (t.left != null)
+            t = t.left;
+        return t;
+    }
+
+    //找最大
+    private Node<T> findMax(Node<T> t) {
+        if (t == null)
+            return t;
+        while (t.right != null)
+            t = t.right;
+        return t;
+    }
+
+    //带左子树旋转,适用于LL型
+    private Node<T> rotateWithLeftChild(Node<T> k2) {
+        Node<T> k1 = k2.left;
+        k2.left = k1.right;
+        k1.right = k2;
+        return k1;
+    }
+
+    //带右子树旋转，适用于RR型
+    private Node<T> rotateWithRightChild(Node<T> k1) {
+        Node<T> k2 = k1.right;
+        k1.right = k2.left;
+        k2.left = k1;
+        return k2;
+    }
+
+    //双旋转，适用于LR型
+    private Node<T> doubleWithLeftChild(Node<T> k3) {
+        k3.left = rotateWithRightChild(k3.left);
+        return rotateWithLeftChild(k3);
+    }
+
+    //双旋转,适用于RL型
+    private Node<T> doubleWithRightChild(Node<T> k1) {
+        k1.right = rotateWithLeftChild(k1.right);
+        return rotateWithRightChild(k1);
+    }
+
+    public boolean isBalance(Node node) {
+        if (node == null)
+            return true;
+        int dis = Node.getDepth(node.left) - Node.getDepth(node.right);
+        return dis > 1 || dis < -1 ? false : isBalance(node.left) && isBalance(node.right);
+    }
+
+    public static void main(String[] args) {
+        AVLTree<Integer> t = new AVLTree<Integer>();
+        int NUMS = 200;
+        int GAP = 17;
+        for (int i = GAP; i != 0; i = (i + GAP) % NUMS)
+            t.insertT(i);
+        t.printTree();
+    }
 }
